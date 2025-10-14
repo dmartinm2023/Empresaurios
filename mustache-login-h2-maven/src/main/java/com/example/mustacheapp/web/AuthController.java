@@ -3,14 +3,12 @@ package com.example.mustacheapp.web;
 import com.example.mustacheapp.model.User;
 import com.example.mustacheapp.repository.UserRepository;
 import com.example.mustacheapp.web.dto.RegisterDto;
-import jakarta.validation.Valid;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class AuthController {
@@ -35,24 +33,27 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public String register(@Valid @ModelAttribute("registerDto") RegisterDto dto,
-                           BindingResult bindingResult,
-                           Model model) {
-        if (bindingResult.hasErrors()) {
+    public String register(
+            @RequestParam String username,
+            @RequestParam String password,
+            @RequestParam String confirmPassword,
+            Model model) {
+        if (username.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
+            model.addAttribute("error", "Todos los campos son obligatorios");
             return "register";
         }
-        if (!dto.getPassword().equals(dto.getConfirmPassword())) {
+        if (!password.equals(confirmPassword)) {
             model.addAttribute("error", "Las contraseñas no coinciden");
             return "register";
         }
-        if (userRepository.existsByUsername(dto.getUsername())) {
+        if (userRepository.existsByUsername(username)) {
             model.addAttribute("error", "El usuario ya existe");
             return "register";
         }
-        String hash = encoder.encode(dto.getPassword());
-        User user = new User(dto.getUsername(), hash, "USER");
+        String hash = encoder.encode(password);
+        User user = new User(username, hash, "USER");
         userRepository.save(user);
-        model.addAttribute("success", "Usuario registrado. Inicia sesión.");
-        return "login";
+        return "redirect:/login?registered";
     }
+
 }
