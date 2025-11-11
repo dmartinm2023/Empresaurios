@@ -29,7 +29,6 @@ public class CredentialController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Credential credential, @AuthenticationPrincipal User user) {
-        // encrypt password before saving
         String encrypted = encryptionService.encrypt(credential.getPasswordEncrypted());
         credential.setPasswordEncrypted(encrypted);
         credential.setOwnerUsername(user.getUsername());

@@ -13,7 +13,7 @@ import java.util.Base64;
 @Service
 public class EncryptionService {
 
-    @Value("${app.encryption.secret:defaultsecretdefault}") // must be 16/24/32 bytes for AES
+    @Value("${app.encryption.secret:defaultsecretdefault}") 
     private String secret;
 
     private SecretKeySpec keySpec;

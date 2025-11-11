@@ -15,7 +15,7 @@ public class Credential {
     @Lob
     private String passwordEncrypted;
 
-    private String ownerUsername; // simple ownership by username
+    private String ownerUsername; 
 
     public Credential() {}
 

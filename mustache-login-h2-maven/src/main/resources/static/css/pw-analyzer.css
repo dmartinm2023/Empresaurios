@@ -1,15 +1,14 @@
-/* Medidor de contraseña — oscurecido y sin conflictos */
 :root{
-  --pw-bg:#1f2937;          /* fondo barra */
-  --pw-weak:#ef4444;        /* rojo */
-  --pw-fair:#f59e0b;        /* naranja */
-  --pw-good:#60a5fa;        /* azul */
-  --pw-strong:#34d399;      /* verde */
+  --pw-bg:#1f2937;         
+  --pw-weak:#ef4444;     
+  --pw-fair:#f59e0b;       
+  --pw-good:#60a5fa;     
+  --pw-strong:#34d399;     
 
-  --pw-weak-bg:#3a1717;     /* fondo badge débil */
-  --pw-fair-bg:#3b2a13;     /* fondo badge aceptable */
-  --pw-good-bg:#14263e;     /* fondo badge buena */
-  --pw-strong-bg:#123528;   /* fondo badge fuerte */
+  --pw-weak-bg:#3a1717;     
+  --pw-fair-bg:#3b2a13;    
+  --pw-good-bg:#14263e;    
+  --pw-strong-bg:#123528;  
 
   --pw-border: rgba(255,255,255,.06);
   --pw-chip-bg:#0b1220;
@@ -25,7 +24,6 @@
   .pw-row{ grid-template-columns: 1fr auto; align-items:center; }
 }
 
-/* Barra */
 .pw-meter{
   margin-top:6px;
   height:12px;
@@ -45,7 +43,6 @@
 .pw-bar.good{ background:var(--pw-good) }
 .pw-bar.strong{ background:var(--pw-strong) }
 
-/* Badge */
 .pw-badge{
   display:inline-flex;
   align-items:center;
@@ -65,7 +62,6 @@
 .pw-badge.good{  background:var(--pw-good-bg) }
 .pw-badge.strong{background:var(--pw-strong-bg) }
 
-/* Tips y chips */
 .pw-tips{ margin-top:10px; color:var(--pw-muted); font-size:.9rem }
 .pw-chips{ margin-top:8px }
 .pw-chip{
@@ -80,7 +76,6 @@
 }
 .pw-ok{ color: var(--pw-strong); font-weight:700 }
 
-/* Layout que alinea badge a la derecha de la barra si quieres */
 .pw-layout{
   display:grid;
   grid-template-columns: 1fr auto;
