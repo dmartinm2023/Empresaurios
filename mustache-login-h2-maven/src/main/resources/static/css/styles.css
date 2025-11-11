@@ -1,234 +1,124 @@
-/* ==============================
-   ESTILOS GENERALES
-============================== */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-body {
-  font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  background: linear-gradient(135deg, 
-    #020617 0%,
-    #0f172a 25%,
-    #1e293b 50%,
-    #334155 75%,
-    #475569 100%
-  );
-  background-size: 400% 400%;
-  color: #e2e8f0;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  animation: gradientAnimation 15s ease infinite;
+/* Tema oscuro base (mantiene tu look original) */
+:root{
+  --bg:#0f172a;            /* fondo app */
+  --panel:#111827;         /* panel/card */
+  --ink:#e5e7eb;           /* texto principal */
+  --ink-muted:#9ca3af;     /* texto secundario */
+  --primary:#2563eb;       /* botón primario */
+  --primary-ink:#ffffff;
+  --border:#1f2937;
+  --radius:12px;
+  --shadow:0 12px 40px rgba(0,0,0,.35);
 }
 
-@keyframes gradientAnimation {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  color:var(--ink);
+  background:var(--bg);
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans",sans-serif;
 }
 
-/* ==============================
-   CONTENEDOR PRINCIPAL
-============================== */
-.container {
-  max-width: 480px;
-  width: 90%;
-  margin: 2rem auto;
+.container{
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
 }
 
-/* ==============================
-   TARJETAS
-============================== */
-.card {
-  background: linear-gradient(145deg, #1e293b, #0f172a);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 
-    0 8px 30px rgba(0, 0, 0, 0.3),
-    inset 0 1px 1px rgba(255, 255, 255, 0.07);
-  margin-bottom: 1rem;
-  animation: fadeIn 0.4s ease-in-out;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow-wrap: break-word;
-  backdrop-filter: blur(10px);
+.card{
+  width:min(720px, 100%);
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:22px 22px 18px;
+  backdrop-filter:saturate(120%) blur(4px);
 }
 
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 16px;
-  background: linear-gradient(145deg, #2d3b54, #1a2437);
-  z-index: -1;
-  margin: -1px;
+h1,h2,h3{margin:0 0 12px}
+h1{font-size:1.6rem; letter-spacing:.2px}
+p{color:var(--ink-muted); margin:10px 0}
+
+/* Forms */
+form{display:grid; gap:10px}
+label{font-size:.95rem; color:var(--ink); margin-top:4px}
+input,button,select,textarea{font:inherit}
+
+input[type="text"], input[type="password"], input[type="email"]{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #334155;
+  border-radius:10px;
+  background:#0b1220;
+  color:var(--ink);
+  outline:none;
+  transition:border-color .2s, box-shadow .2s, background .2s;
+}
+input::placeholder{color:#6b7280}
+input:focus{
+  border-color:#3b82f6;
+  box-shadow:0 0 0 3px rgba(59,130,246,.25);
 }
 
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 
-    0 12px 35px rgba(0, 0, 0, 0.4),
-    inset 0 1px 2px rgba(255, 255, 255, 0.1);
-  border-color: rgba(96, 165, 250, 0.4);
+/* Buttons */
+button{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:10px 14px;
+  border-radius:10px;
+  border:1px solid #334155;
+  background:#0b1220;
+  color:var(--ink);
+  cursor:pointer;
+  transition:transform .06s ease, box-shadow .2s, background .2s, color .2s;
+}
+button:hover{box-shadow:0 8px 20px rgba(0,0,0,.35)}
+button:active{transform:translateY(1px)}
+
+button.primary{
+  background:var(--primary);
+  color:var(--primary-ink);
+  border-color:transparent;
+  font-weight:600;
+}
+button.primary:hover{box-shadow:0 14px 28px rgba(37,99,235,.35)}
+
+a{color:#60a5fa; text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Cards dentro de card */
+.card .card{
+  margin:10px 0 6px;
+  padding:12px;
+  background:#0b1220;
+  border-color:#1f2937;
 }
 
-/* Estilo especial para las tarjetas de contraseñas (las internas) */
-.card .card {
-  background: linear-gradient(145deg, #2a4365, #1e3a8a);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-  margin-bottom: 0.5rem;
-  padding: 1rem;
+/* Alerts */
+.alert{
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid #374151;
+  background:#0b1220;
+  color:#e5e7eb;
+}
+.alert.alert-danger{
+  background:#2b1111;
+  border-color:#7f1d1d;
+  color:#fecaca;
 }
 
-.card .card:hover {
-  background: linear-gradient(145deg, #2c5282, #2a4365);
-  border-color: rgba(66, 153, 225, 0.4);
-  transform: translateY(-2px);
-}
+/* Utilidades */
+.mt-0{margin-top:0}
+.mt-4{margin-top:4px}
+.mt-6{margin-top:6px}
+.mt-8{margin-top:8px}
+.mt-12{margin-top:12px}
 
-.card .card p {
-  margin: 0;
-  color: #e2e8f0;
-}
-
-.card .card strong {
-  color: #90cdf4;
-}
-
-/* Animación sutil al cargar */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ==============================
-   FORMULARIOS
-============================== */
-input[type="text"],
-input[type="password"] {
-  width: 95%;
-  padding: 0.8rem 1rem;
-  margin-bottom: 1.5rem;
-  border: 1px solid #475569;
-  border-radius: 8px;
-  font-size: 1rem;
-  background: linear-gradient(145deg, #0f172a, #1e293b);
-  color: #e2e8f0;
-  transition: all 0.3s ease;
-  display: block;
-  margin: 0 auto 1.5rem auto; /* centra el input horizontalmente */
-}
-
-input:focus {
-  border-color: #3b82f6;
-  outline: none;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
-  background: #1e293b;
-}
-
-/* ==============================
-   BOTONES
-============================== */
-button {
-  padding: 0.8rem 1.5rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 1rem;
-  transition: background 0.3s ease, transform 0.2s, box-shadow 0.2s;
-}
-
-button.primary {
-  background: linear-gradient(145deg, #3b82f6, #2563eb);
-  color: #ffffff;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
-}
-
-button.primary:hover {
-  background: linear-gradient(145deg, #2563eb, #1d4ed8);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
-}
-
-button.primary:active {
-  transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4);
-}
-
-a {
-  color: #3b82f6;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-/* ==============================
-   ALERTAS
-============================== */
-.alert {
-  padding: 1rem 1.5rem;
-  border-radius: 8px;
-  margin-bottom: 1.5rem;
-  font-weight: 600;
-}
-
-.alert.error {
-  background: #f87171;
-  color: #7f1d1d;
-  border-left: 6px solid #dc2626;
-}
-
-.alert.success {
-  background: #86efac;
-  color: #064e3b;
-  border-left: 6px solid #22c55e;
-}
-
-/* ==============================
-   UTILIDADES
-============================== */
-.center {
-  text-align: center;
-}
-
-h1 {
-  color: #ffffff;
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
-  font-weight: 700;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  letter-spacing: -0.5px;
-}
-
-/* Estilo para el texto descriptivo debajo del título */
-.card > p:first-of-type {
-  color: #94a3b8;
-  font-size: 1.1rem;
-  margin-bottom: 1.5rem;
-  line-height: 1.5;
-}
-
-/* Mejorar visibilidad de los enlaces principales */
-.card > p > a {
-  color: #60a5fa;
-  font-weight: 600;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.card > p > a:hover {
-  background: rgba(96, 165, 250, 0.1);
-  text-decoration: none;
-}
+/* Aislar el medidor para que reglas globales no lo rompan */
+.pw-wrap, .pw-wrap *{box-sizing:border-box}
