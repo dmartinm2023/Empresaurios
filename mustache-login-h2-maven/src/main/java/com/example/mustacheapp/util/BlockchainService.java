@@ -65,8 +65,7 @@ public class BlockchainService {
             @Value("${blockchain.privateKey}") String privateKey,
             @Value("${blockchain.contractAddress}") String contractAddress,
             @Value("${blockchain.chainId:11155111}") long chainId,
-            @Value("${blockchain.secretSalt:EMPRESARIOS_DEMO_SECRET}") String secretSalt
-    ) {
+            @Value("${blockchain.secretSalt:EMPRESARIOS_DEMO_SECRET}") String secretSalt) {
         this.web3j = Web3j.build(new HttpService(rpcUrl));
         this.contractAddress = contractAddress;
         this.chainId = chainId;
@@ -88,7 +87,8 @@ public class BlockchainService {
                 }
             }
         } catch (Exception e) {
-            System.err.println("[BlockchainService] Invalid private key, blockchain integration disabled: " + e.getMessage());
+            System.err.println(
+                    "[BlockchainService] Invalid private key, blockchain integration disabled: " + e.getMessage());
             creds = null;
             ok = false;
         }
@@ -97,9 +97,11 @@ public class BlockchainService {
         this.enabled = ok;
 
         if (!enabled) {
-            System.err.println("[BlockchainService] WARNING: Blockchain integration is DISABLED (no valid private key configured).");
+            System.err.println(
+                    "[BlockchainService] WARNING: Blockchain integration is DISABLED (no valid private key configured).");
         } else {
-            System.out.println("[BlockchainService] Blockchain integration ENABLED for address: " + this.credentials.getAddress());
+            System.out.println(
+                    "[BlockchainService] Blockchain integration ENABLED for address: " + this.credentials.getAddress());
         }
     }
 
@@ -110,7 +112,7 @@ public class BlockchainService {
 
         try {
             String toHash = clearPassword + "|" + secretSalt + "|" + title;
-            String commitmentHex = Hash.sha3(toHash.getBytes(StandardCharsets.UTF_8));
+            String commitmentHex = Numeric.toHexString(Hash.sha3(toHash.getBytes(StandardCharsets.UTF_8)));
 
             byte[] commitmentBytes = Numeric.hexStringToByteArray(commitmentHex);
             if (commitmentBytes.length != 32) {
@@ -123,14 +125,12 @@ public class BlockchainService {
             Function function = new Function(
                     "storeCommitment",
                     Arrays.asList(commitment, label),
-                    Collections.emptyList()
-            );
+                    Collections.emptyList());
 
             String encodedFunction = FunctionEncoder.encode(function);
 
             EthGetTransactionCount txCountResp = web3j.ethGetTransactionCount(
-                    credentials.getAddress(), DefaultBlockParameterName.LATEST
-            ).send();
+                    credentials.getAddress(), DefaultBlockParameterName.LATEST).send();
             BigInteger nonce = txCountResp.getTransactionCount();
 
             EthGasPrice gasPriceResp = web3j.ethGasPrice().send();
@@ -143,8 +143,7 @@ public class BlockchainService {
                     gasLimit,
                     contractAddress,
                     BigInteger.ZERO,
-                    encodedFunction
-            );
+                    encodedFunction);
 
             byte[] signedMessage = TransactionEncoder.signMessage(rawTx, chainId, credentials);
             String hexValue = Numeric.toHexString(signedMessage);

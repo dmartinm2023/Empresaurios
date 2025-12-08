@@ -15,7 +15,11 @@
       <hr/>
       {{#credentials}}
         <div class="card" style="margin-bottom:0.5rem;">
-          <p><strong>{{title}}</strong> - {{login}} - <a href="/credentials/view/{{id}}">Ver</a></p>
+          <p>
+            <strong>{{title}}</strong> - {{login}} -
+            <a href="/credentials/view/{{id}}">Ver</a>
+            {{#onChainTxHash}}<span class="tag" style="margin-left:0.5rem;font-size:0.8rem;opacity:.8;">on-chain ✔</span>{{/onChainTxHash}}
+          </p>
         </div>
       {{/credentials}}
       {{^credentials}}<p>No tienes contraseñas guardadas.</p>{{/credentials}}
