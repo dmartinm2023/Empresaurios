@@ -2,6 +2,7 @@ package com.example.mustacheapp.web;
 
 import com.example.mustacheapp.model.Credential;
 import com.example.mustacheapp.repository.CredentialRepository;
+import com.example.mustacheapp.util.BlockchainService;
 import com.example.mustacheapp.util.EncryptionService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
@@ -15,10 +16,14 @@ public class CredentialController {
 
     private final CredentialRepository credentialRepository;
     private final EncryptionService encryptionService;
+    private final BlockchainService blockchainService;
 
-    public CredentialController(CredentialRepository credentialRepository, EncryptionService encryptionService) {
+    public CredentialController(CredentialRepository credentialRepository,
+                                EncryptionService encryptionService,
+                                BlockchainService blockchainService) {
         this.credentialRepository = credentialRepository;
         this.encryptionService = encryptionService;
+        this.blockchainService = blockchainService;
     }
 
     @GetMapping("/new")
@@ -29,9 +34,23 @@ public class CredentialController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Credential credential, @AuthenticationPrincipal User user) {
-        String encrypted = encryptionService.encrypt(credential.getPasswordEncrypted());
+        // Plain password before encryption
+        String clearPassword = credential.getPasswordEncrypted();
+
+        // Encrypt locally for DB
+        String encrypted = encryptionService.encrypt(clearPassword);
         credential.setPasswordEncrypted(encrypted);
         credential.setOwnerUsername(user.getUsername());
+
+        try {
+            BlockchainService.CommitResult result =
+                    blockchainService.sendPasswordCommitment(credential.getTitle(), clearPassword);
+            credential.setOnChainCommitment(result.getCommitmentHex());
+            credential.setOnChainTxHash(result.getTxHash());
+        } catch (RuntimeException ex) {
+            System.err.println("Blockchain error (ignored for UX): " + ex.getMessage());
+        }
+
         credentialRepository.save(credential);
         return "redirect:/";
     }

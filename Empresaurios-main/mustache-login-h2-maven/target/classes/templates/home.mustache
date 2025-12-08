@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inicio</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1>Hola, {{username}}</h1>
+      <p>Este es tu panel. Aquí verás tus contraseñas guardadas.</p>
+      <p><a href="/credentials/new">Añadir nueva contraseña</a> | <a href="/logout">Cerrar sesión</a></p>
+      <hr/>
+      {{#credentials}}
+        <div class="card" style="margin-bottom:0.5rem;">
+          <p>
+            <strong>{{title}}</strong> - {{login}} -
+            <a href="/credentials/view/{{id}}">Ver</a>
+            {{#onChainTxHash}}<span class="tag" style="margin-left:0.5rem;font-size:0.8rem;opacity:.8;">on‑chain ✔</span>{{/onChainTxHash}}
+          </p>
+        </div>
+      {{/credentials}}
+      {{^credentials}}<p>No tienes contraseñas guardadas.</p>{{/credentials}}
+    </div>
+  </div>
+</body>
+</html>

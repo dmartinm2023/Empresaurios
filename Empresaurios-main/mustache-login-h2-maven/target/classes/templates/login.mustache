@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+      <h1 class="center">Iniciar sesión</h1>
+      {{#param.error}}<div class="alert error">Usuario o contraseña incorrectos</div>{{/param.error}}
+      {{#param.logout}}<div class="alert success">Has cerrado sesión</div>{{/param.logout}}
+      {{#success}}<div class="alert success">{{success}}</div>{{/success}}
+      <form method="post" action="/login">
+        <label>Usuario</label>
+        <input type="text" name="username" required>
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+        <button class="primary" type="submit">Entrar</button>
+      </form>
+  <p>¿No tienes cuenta? <a id="to-register" href="/register">Regístrate</a></p>
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+  // Ensure the register link always navigates (works even if default prevented)
+  (function(){
+    var el = document.getElementById('to-register');
+    if (el) el.addEventListener('click', function(e){
+      // allow normal behavior but as a fallback force navigation
+      setTimeout(function(){
+        if (location.pathname !== '/register') location.href = '/register';
+      }, 50);
+    });
+  })();
+</script>

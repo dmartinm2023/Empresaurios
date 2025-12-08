@@ -15,7 +15,11 @@ public class Credential {
     @Lob
     private String passwordEncrypted;
 
-    private String ownerUsername; 
+    private String ownerUsername;
+
+    // On-chain metadata (optional, for display)
+    private String onChainCommitment;
+    private String onChainTxHash;
 
     public Credential() {}
 
@@ -27,12 +31,22 @@ public class Credential {
     }
 
     public Long getId() { return id; }
+
     public String getTitle() { return title; }
     public void setTitle(String title) { this.title = title; }
+
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
+
     public String getPasswordEncrypted() { return passwordEncrypted; }
     public void setPasswordEncrypted(String passwordEncrypted) { this.passwordEncrypted = passwordEncrypted; }
+
     public String getOwnerUsername() { return ownerUsername; }
     public void setOwnerUsername(String ownerUsername) { this.ownerUsername = ownerUsername; }
+
+    public String getOnChainCommitment() { return onChainCommitment; }
+    public void setOnChainCommitment(String onChainCommitment) { this.onChainCommitment = onChainCommitment; }
+
+    public String getOnChainTxHash() { return onChainTxHash; }
+    public void setOnChainTxHash(String onChainTxHash) { this.onChainTxHash = onChainTxHash; }
 }

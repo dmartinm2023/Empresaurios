@@ -1,0 +1,7 @@
+com\example\mustacheapp\repository\UserRepository.class
+com\example\mustacheapp\model\Credential.class
+com\example\mustacheapp\config\SecurityConfig.class
+com\example\mustacheapp\MustacheLoginH2Application.class
+com\example\mustacheapp\service\JpaUserDetailsService.class
+com\example\mustacheapp\model\User.class
+com\example\mustacheapp\repository\CredentialRepository.class
