@@ -1,4 +1,6 @@
+com\example\mustacheapp\util\BlockchainService$CommitResult.class
 com\example\mustacheapp\repository\UserRepository.class
+com\example\mustacheapp\util\BlockchainService.class
 com\example\mustacheapp\web\HomeController.class
 com\example\mustacheapp\model\Credential.class
 com\example\mustacheapp\web\dto\RegisterDto.class
